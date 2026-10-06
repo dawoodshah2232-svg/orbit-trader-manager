@@ -272,3 +272,9 @@
   body[data-ot-density="comfortable"]{--ot-left:310px;--ot-bottom:265px}
   body[data-ot-density="comfortable"] .rx-qrow,body[data-ot-density="comfortable"] .crow,body[data-ot-density="comfortable"] td{min-height:35px!important}
 }
+
+/* Desktop navigation section labels */
+@media(min-width:1024px){
+  .ot-side-section{flex:0 0 auto;height:22px;display:flex;align-items:flex-end;padding:6px 9px 3px;color:#586477;font-size:8px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;pointer-events:none;user-select:none}
+  .ot-side-section:first-child{margin-top:1px}
+}
