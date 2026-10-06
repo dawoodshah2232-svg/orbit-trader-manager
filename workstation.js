@@ -375,7 +375,7 @@ function refreshStatus(){
   var online=navigator.onLine;
   var dot=qs("#ot-online-dot"),txt=qs("#ot-online");
   if(dot){dot.className="ot-sdot"+(online?"":" off");}if(txt)txt.textContent=online?"ONLINE":"OFFLINE";
-  var clock=qs("#ot-clock");if(clock)clock.textContent=new Date().toLocaleTimeString([],{hour12:false});
+  var clock=qs("#ot-clock");if(clock)clock.textContent=new Date().toLocaleTimeString("en-US",{hour12:false});
   var c=qs("#ot-context");
   if(c){
     if(app==="terminal"){
@@ -395,8 +395,41 @@ function hideModeConfusion(){
   qsa("#mode-seg,[id^='d-mode-seg']").forEach(function(x){x.style.display="none";});
   try{if(app==="terminal"&&typeof setUiMode==="function")setUiMode("advanced",true);}catch(e){}
 }
+
+function groupDesktopNav(){
+  if(!desktop.matches)return;
+  var nav=qs(".mtabs");
+  if(!nav||qs(".ot-side-section",nav))return;
+  var groups=[];
+  if(app==="manager"){
+    groups=[
+      ["overview","Workspace"],["clients","Clients"],["positions","Trading"],
+      ["symbols","Markets"],["requests","Operations"],["reports","Reporting"],
+      ["broadcast","Communication"],["settings","Platform"]
+    ];
+  }else if(app==="admin"){
+    groups=[
+      ["dashboard","Workspace"],["symbols","Trading configuration"],["liquidity","Execution & risk"],
+      ["accounts","Accounts & finance"],["compliance","Services"],["emergency","Operations"],
+      ["server","Connectivity"],["security","Security & automation"],["clients","Broker operations"],
+      ["reports","Reporting"]
+    ];
+  }else return;
+  function keyOf(t){
+    return ((t.dataset&&t.dataset.t)||t.textContent||"").replace(/\s+/g," ").trim().toLowerCase();
+  }
+  groups.forEach(function(g){
+    var target=null,buttons=qsa(".mtab",nav);
+    for(var i=0;i<buttons.length;i++){if(keyOf(buttons[i])===g[0]){target=buttons[i];break;}}
+    if(target){
+      var h=el("div","ot-side-section",g[1]);
+      nav.insertBefore(h,target);
+    }
+  });
+}
+
 function init(){
-  buildChrome();buildPalette();applyDensity();loadLayout();buildSplitters();buildNavigator();bindContexts();bindKeys();hideModeConfusion();refreshStatus();
+  buildChrome();buildPalette();applyDensity();loadLayout();buildSplitters();buildNavigator();groupDesktopNav();bindContexts();bindKeys();hideModeConfusion();refreshStatus();
   setInterval(refreshStatus,1000);
   window.addEventListener("online",refreshStatus);window.addEventListener("offline",refreshStatus);
 }
