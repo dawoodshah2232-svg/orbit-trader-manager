@@ -1632,7 +1632,7 @@ function renderRisk(){
 function renderClientAlerts(){const el=$("clientalert-list");if(!el)return;
   const list=(S.clientAlerts||[]);
   el.innerHTML=list.length?list.map(a=>{const c=cli(a.login);const nm=c?c.name:("Client "+a.login);
-    return `<div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="color:var(--amber);font-size:16px">🔔</span><div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">${esc(nm)}</div><div style="font-size:12px;color:var(--text2)">${esc(a.sym)} · ${(a.kind||"price")==="price"?"price":""} alert armed</div></div><div class="num" style="font-size:13.5px;font-weight:700">${a.price}</div></div>`;}).join("")
+    return `<div class="card" style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="sla amb">ALERT</span><div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">${esc(nm)}</div><div style="font-size:12px;color:var(--text2)">${esc(a.sym)} · ${(a.kind||"price")==="price"?"price":""} alert armed</div></div><div class="num" style="font-size:13.5px;font-weight:700">${a.price}</div></div>`;}).join("")
    :`<div class="card"><div class="empty">No armed client alerts.</div></div>`;
 }
 /* ================= broadcast to all traders ================= */
